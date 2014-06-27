@@ -1,0 +1,61 @@
+---
+# Defines tasks to setup command-line magic
+
+- name: Include the OS specific varibles
+  include_vars: '{{ ansible_os_family }}.yml'
+  tags:
+    - dotfiles
+    - users
+
+- name: Install packages for Debian derivatives
+  apt: >
+    pkg={{ item }}
+    update_cache=yes
+    state=latest
+  with_items: dotfiles_packages
+  when: ansible_os_family == 'Debian'
+  tags:
+    - dotfiles
+    - users
+
+- name: "Change user shell"
+  user: >
+    name={{ dotfiles_user }}
+    shell={{ dotfiles_shell }}
+    home={{ dotfiles_home_dir }}
+    move_home=yes
+  tags:
+    - dotfiles
+    - users
+
+- name: "Clone dotfiles repository to $HOME/.dotfiles"
+  git: >
+    repo=https://github.com/augustash/serverdots.git
+    dest={{ dotfiles_home_dir }}/.dotfiles
+    version=facelift
+    update=yes
+    force=no
+  ignore_errors: true
+  tags:
+    - dotfiles
+    - users
+
+- name: "Ensure proper ownership of dotfiles"
+  file: >
+    path={{ dotfiles_home_dir }}/.dotfiles
+    owner={{ dotfiles_user }}
+    group={{ dotfiles_user }}
+    state=directory
+    recurse=yes
+  tags:
+    - dotfiles
+    - users
+
+  # Automated version which currently stalls in Ansible
+  # /bin/bash < <( curl https://raw.github.com/augustash/serverdots/facelift/bootstrap.sh )
+- name: "Run dotfiles installer"
+  shell: >
+    /usr/bin/rsync -az --filter="merge {{ dotfiles_home_dir }}/.dotfiles/.rsync-filter" {{ dotfiles_home_dir }}/.dotfiles/ {{ dotfiles_home_dir }}/
+  tags:
+    - dotfiles
+    - users

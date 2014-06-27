@@ -1,0 +1,7 @@
+---
+# The variables file used by dotfiles playbooks.
+# If not overriden in inventory or as a parameter, this is the value that will be used
+
+dotfiles_user: ''
+dotfiles_home_dir: ''
+dotfiles_shell: '/bin/zsh'

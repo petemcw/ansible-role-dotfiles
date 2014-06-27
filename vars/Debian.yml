@@ -1,0 +1,5 @@
+---
+# Defines variables for Debian/Ubuntu
+
+dotfiles_packages:
+  - 'zsh'
