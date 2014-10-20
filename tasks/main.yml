@@ -34,7 +34,7 @@
     dest={{ dotfiles_home_dir }}/.dotfiles
     version=facelift
     update=yes
-    force=no
+    force=yes
   ignore_errors: true
   tags:
     - dotfiles
