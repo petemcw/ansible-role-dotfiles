@@ -1,10 +1,12 @@
 # Dotfiles Role for Ansible
 
-This role installs an opinionated version of [dotfiles](http://dotfiles.github.io/) that we use on our servers.
+This role installs an opinionated version of [dotfiles](http://dotfiles.github.io/)
+that we use on our servers.
 
 ## Requirements
 
-This role requires [Ansible](http://www.ansibleworks.com/) version 1.4 or higher and the Debian/Ubuntu platform.
+This role requires [Ansible](http://www.ansibleworks.com/) version 1.4 or higher
+and the Debian/Ubuntu platform.
 
 ## Role Variables
 
@@ -41,7 +43,9 @@ dotfiles_shell: '/bin/zsh'
 
 ## Dependencies
 
-None.
+The following packages may be required for Debian derivatives:
+
+- `git-core`
 
 ## License
 
